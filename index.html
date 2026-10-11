@@ -29,7 +29,7 @@ button,.ar-button{border:0;border-radius:15px;padding:15px 12px;font-size:15px;f
 <main>
 <header><div class="logo">✚</div><div><h1>Скелет в твоей комнате</h1><p>Интерактивная 3D-модель · Биология</p></div></header>
 <section class="viewer">
-  <model-viewer id="model" src="./skeleton.glb" alt="Трёхмерная модель скелета человека"
+  <model-viewer id="model" src="./ct_derived_human_skeleton.glb" alt="Трёхмерная модель скелета человека"
     camera-controls auto-rotate rotation-per-second="18deg" shadow-intensity="1"
     exposure="1" ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto"
     interaction-prompt="auto" touch-action="pan-y">
@@ -51,7 +51,7 @@ button,.ar-button{border:0;border-radius:15px;padding:15px 12px;font-size:15px;f
 const mv=document.querySelector('#model');
 document.querySelector('#arFallback').addEventListener('click',()=>{ if(mv.activateAR) mv.activateAR(); });
 document.querySelector('#reset').addEventListener('click',()=>{mv.cameraOrbit='0deg 75deg 2.5m';mv.cameraTarget='auto';mv.autoRotate=true;});
-mv.addEventListener('error',()=>{document.querySelector('.hint').textContent='Не удалось загрузить модель. Проверь подключение к интернету и наличие файла skeleton.glb рядом с index.html.';});
+mv.addEventListener('error',()=>{document.querySelector('.hint').textContent='Не удалось загрузить модель. Проверь подключение к интернету и наличие файла ct_derived_human_skeleton.glb рядом с index.html.';});
 </script>
 </body>
 </html>
