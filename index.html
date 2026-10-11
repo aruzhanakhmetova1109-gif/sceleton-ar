@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101820">
+<title>Скелет AR — Биология</title>
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<style>
+:root{color-scheme:dark;--bg:#101820;--panel:#1a2732;--line:#31414d;--accent:#b7f36b;--muted:#aab7c1}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#233644 0,#101820 60%);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f4f7f8;min-height:100svh}
+main{max-width:760px;margin:auto;padding:22px 16px 28px}
+header{display:flex;align-items:center;gap:12px;margin:4px 0 18px}.logo{width:46px;height:46px;border-radius:15px;background:var(--accent);color:#142018;display:grid;place-items:center;font-size:25px;font-weight:800}
+h1{font-size:clamp(23px,5vw,32px);margin:0;letter-spacing:-.7px}header p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.viewer{position:relative;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(145deg,#172631,#0c1319);height:min(58vh,520px);min-height:330px}
+model-viewer{width:100%;height:100%;--poster-color:transparent;background:transparent}
+.hint{position:absolute;left:14px;right:14px;bottom:14px;text-align:center;font-size:12px;color:#dce5eb;background:#0b1219c9;border:1px solid #ffffff1c;border-radius:12px;padding:10px;pointer-events:none}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+button,.ar-button{border:0;border-radius:15px;padding:15px 12px;font-size:15px;font-weight:700;cursor:pointer}
+.primary{background:var(--accent);color:#132015}.secondary{background:var(--panel);border:1px solid var(--line);color:#f4f7f8}
+.ar-button{position:absolute;left:50%;bottom:68px;transform:translateX(-50%);white-space:nowrap;background:var(--accent);color:#142018;box-shadow:0 8px 28px #0007}
+.panel{background:#17232c;border:1px solid var(--line);border-radius:18px;padding:15px;margin-top:12px}
+.panel h2{font-size:15px;margin:0 0 8px}.panel p{font-size:13px;line-height:1.5;color:var(--muted);margin:0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.step{padding:12px 10px;border-radius:14px;background:#1b2a35;font-size:12px;line-height:1.4;color:#c9d4db}.step b{display:block;color:var(--accent);font-size:15px;margin-bottom:5px}
+@media(max-width:430px){main{padding:16px 12px 22px}.viewer{min-height:310px}.actions{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.step{display:flex;gap:10px;align-items:center}.step b{margin:0;min-width:22px}}
+</style>
+</head>
+<body>
+<main>
+<header><div class="logo">✚</div><div><h1>Скелет в твоей комнате</h1><p>Интерактивная 3D-модель · Биология</p></div></header>
+<section class="viewer">
+  <model-viewer id="model" src="./skeleton.glb" alt="Трёхмерная модель скелета человека"
+    camera-controls auto-rotate rotation-per-second="18deg" shadow-intensity="1"
+    exposure="1" ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto"
+    interaction-prompt="auto" touch-action="pan-y">
+    <button slot="ar-button" class="ar-button">⌖ Показать в комнате</button>
+  </model-viewer>
+  <div class="hint">Поверни модель пальцем · Раздвинь пальцы, чтобы приблизить</div>
+</section>
+<div class="actions">
+  <button class="primary" id="arFallback">⌖ Показать в комнате</button>
+  <button class="secondary" id="reset">↻ Вернуть модель</button>
+</div>
+<section class="panel"><h2>Как включить дополненную реальность</h2>
+<p>Открой эту страницу в Safari на iPhone. Нажми «Показать в комнате», затем наведи камеру на пол и следуй подсказкам iPhone. Разреши доступ к камере, если появится запрос.</p>
+<div class="steps"><div class="step"><b>1</b><span>Открой ссылку в Safari</span></div><div class="step"><b>2</b><span>Нажми «Показать в комнате»</span></div><div class="step"><b>3</b><span>Найди пол и размести скелет</span></div></div>
+</section>
+<section class="panel"><h2>Если AR не запускается</h2><p>Сайт должен быть опубликован по HTTPS. Для режима AR нужен совместимый iPhone и актуальная iOS. Если открылось только 3D-окно, проверь, что ссылка открыта именно в Safari, а не во встроенном браузере мессенджера.</p></section>
+</main>
+<script>
+const mv=document.querySelector('#model');
+document.querySelector('#arFallback').addEventListener('click',()=>{ if(mv.activateAR) mv.activateAR(); });
+document.querySelector('#reset').addEventListener('click',()=>{mv.cameraOrbit='0deg 75deg 2.5m';mv.cameraTarget='auto';mv.autoRotate=true;});
+mv.addEventListener('error',()=>{document.querySelector('.hint').textContent='Не удалось загрузить модель. Проверь подключение к интернету и наличие файла skeleton.glb рядом с index.html.';});
+</script>
+</body>
+</html>
